@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Form</title>
+  <style>
+    /* General Styling */
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh; /* Full height for vertical centering */
+      display: flex; /* Use flexbox */
+      align-items: center; /* Center vertically */
+      justify-content: center; /* Center horizontally */
+      background-color: #ffffff; /* White background */
+      color: #000080; /* Dark navy text color */
+    }
+
+    /* Form Container Styling */
+    .form-container {
+      max-width: 500px;
+      padding: 30px;
+      background: #000080; /* Navy background for form */
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+      color: white; /* Text color inside container */
+      width: 100%; /* Full width up to max-width */
+      box-sizing: border-box; /* Include padding in width */
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      text-align: center; /* Centered heading */
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold; /* Bold labels */
+    }
+
+    input {
+      width: 100%;
+      padding: 10px; /* Increased padding */
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box; /* Added for consistent sizing */
+    }
+
+    button {
+      padding: 10px 15px;
+      background-color: #000080; /* Navy blue for button */
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold; /* Bold button text */
+      transition: background-color 0.3s; /* Smooth transition for hover effect */
+      width: 100%; /* Make button full width */
+    }
+
+    button:hover {
+      background-color: #0056b3; /* Darker navy blue on hover */
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h1>Booking Form</h1>
+    <form action="/submit-booking" method="POST">
+      <div class="form-group">
+        <label for="customerName">Your Name:</label>
+        <input type="text" id="customerName" name="customerName" required>
+      </div>
+      <input type="hidden" name="courtID" value="<%= courtID %>">
+      <input type="hidden" name="timeSlot" value="<%= timeSlot %>">
+      <input type="hidden" name="date" value="<%= date %>">
+      <input type="hidden" name="centerID" value="<%= centerID %>"> <!-- Add centerID -->
+      <input type="hidden" name="sportID" value="<%= sportID %>"> <!-- Add sportID -->
+      <button type="submit">Confirm Booking</button>
+    </form>
+  </div>
+</body>
+</html>

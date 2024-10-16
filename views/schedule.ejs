@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Schedule</title>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff; /* White background */
+      color: #000080; /* Dark navy text color */
+    }
+
+    /* Container styling */
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 30px;
+      background: #000080; /* Navy background for container */
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+      color: white; /* Text color inside container */
+    }
+
+    /* Title Styling */
+    h1, h2 {
+      font-weight: bold;
+      color: #ffffff; /* White for headings inside container */
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-bottom: 15px;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    /* Court Styling */
+    .court {
+      margin-bottom: 30px;
+      padding: 20px;
+      background-color: #000080; /* Navy blue for court sections */
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .court h3 {
+      margin-bottom: 10px;
+      color: #ffffff; /* White for court name */
+      font-size: 1.5rem;
+      text-align: center;
+    }
+
+    /* Time slot box */
+    .time-slot {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 20px;
+      margin: 8px 0;
+      border-radius: 5px;
+      font-weight: bold;
+      color: white; /* Text color for time slots */
+    }
+
+    /* Status Styles */
+    .available {
+      background-color: #3b743b; 
+    }
+
+    .booked {
+      background-color: #dc3545; 
+    }
+
+    .pending {
+      background-color: #ffc107;
+    }
+
+    /* Button Styling */
+    .button {
+      padding: 8px 12px;
+      background-color: #000080; /* Navy blue for buttons */
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .button:hover {
+      background-color: #0056b3; 
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Booking Schedule for <%= center.name %> - <%= sport.name %></h1>
+    <p>Date: <%= date %></p>
+
+    <h2>Courts:</h2>
+    <% courts.forEach(court => { %>
+      <div class="court">
+        <h3>Court: <%= court.name %></h3>
+
+        <% // Create an array of time slots for 6 AM to 11 AM %>
+        <% for (let hour = 6; hour <= 11; hour++) { %>
+          <% const timeSlot = hour < 10 ? `0${hour}:00 AM` : `${hour}:00 AM`; %>
+          
+          <% // Check if there's a booking for this time slot %>
+          <% const booking = bookings.find(b => b.court.toString() === court._id.toString() && b.timeSlot === timeSlot); %>
+          
+          <div class="time-slot <%= booking ? booking.status : 'available' %>">
+            <span><%= timeSlot %></span>
+            <span><%= booking ? booking.customerName : 'Available' %></span>
+            <% if (!booking) { %>
+              <form action="/book" method="GET" style="display:inline;">
+                <input type="hidden" name="courtID" value="<%= court._id %>">
+                <input type="hidden" name="timeSlot" value="<%= timeSlot %>">
+                <input type="hidden" name="date" value="<%= date %>">
+                <button type="submit" class="button">Book</button>
+              </form>
+            <% } %>
+          </div>
+        <% } %>
+      </div>
+    <% }); %>
+  </div>
+</body>
+</html>

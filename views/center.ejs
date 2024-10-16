@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= center.name %> - Information</title>
+    <link rel="stylesheet" href="/css/style.css"> <!-- Link to your CSS -->
+
+    <style>
+      /* General Styles */
+      body {
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #ffffff;
+      }
+
+      /* Dark overlay for the background */
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('/images/sports-bg.jpg') no-repeat center center fixed;
+        background-size: cover;
+        z-index: -1;
+        filter: brightness(40%); /* Darken the background */
+      }
+
+      /* Container styling */
+      .container {
+        max-width: 600px;
+        margin: 80px auto;
+        padding: 40px;
+        background: rgba(0, 0, 139, 0.85); /* Royal navy blue with transparency */
+        border-radius: 12px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        text-align: center;
+      }
+
+      /* Heading Styling */
+      h1 {
+        font-size: 2.2rem;
+        color: #ffffff;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+
+      /* Subtitle Styling */
+      p {
+        font-size: 1.2rem;
+        color: #e0e0e0;
+        margin-bottom: 25px;
+      }
+
+      /* Form Label Styling */
+      label {
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        display: block;
+        color: #ffffff;
+      }
+
+      /* Custom Dropdown (Select Field) */
+      .custom-select-wrapper {
+        position: relative;
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      select {
+        width: 100%;
+        padding: 12px;
+        padding-right: 40px;  /* Adjust space for the custom arrow */
+        font-size: 1.1rem;
+        font-weight: bold;  /* Make text bold */
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        background-color: #f0f0f0;
+        color: #000;
+        appearance: none;  /* Remove default arrow */
+        outline: none;
+        transition: border-color 0.3s ease;
+      }
+
+      select:focus {
+        border-color: #ffffff;
+      }
+
+      /* Custom arrow styling */
+      .custom-select-wrapper::after {
+        content: "\25BC";  /* Unicode for down arrow */
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        transform: translateY(-50%);
+        pointer-events: none;
+        font-size: 1.2rem;
+        color: #333; /* Custom arrow color */
+      }
+
+      /* Button Styling */
+      .btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background: #000080; /* Solid royal navy blue */
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      .btn:hover {
+        background: #1b1b8f;
+      }
+
+      /* Link Styling */
+      a {
+        display: block;
+        margin-top: 20px;
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+    </style>
+</head>
+<body>
+  <div class="container">
+    <h1><%= center.name %></h1>
+    <p><strong>Location:</strong> <%= center.location %></p>
+
+    <h2>Choose a Sport</h2> <!-- Only one occurrence of "Choose a Sport" -->
+
+    <!-- Form to select the sport -->
+    <form action="/center/<%= center._id %>/sport" method="POST">
+      <div class="form-group">
+        <div class="custom-select-wrapper">
+          <select name="sportID" id="sport" required>
+            <option value="" disabled selected>Choose a sport</option>
+            <% center.sports.forEach(sport => { %>
+              <option value="<%= sport._id %>"><%= sport.name %></option>
+            <% }); %>
+          </select>
+        </div>
+      </div>
+
+      <input type="hidden" name="centerID" value="<%= center._id %>"> <!-- Store centerID -->
+      <button type="submit" class="btn">View Courts</button>
+    </form>
+    
+    <a href="/">← Back to Centers</a> <!-- Link back to the center selection page -->
+  </div>
+</body>
+</html>
