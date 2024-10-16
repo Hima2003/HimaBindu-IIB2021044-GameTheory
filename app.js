@@ -27,10 +27,10 @@ db.once("open", () => {
 app.set("views", path.join(__dirname, "views"));
 
 // Model definitions
-const Center = require("./models/Center");
-const Sport = require("./models/Sport");
-const Booking = require("./models/Booking");
-const Court = require("./models/Court");
+const Center = require("./models/center");
+const Sport = require("./models/sport");
+const Booking = require("./models/booking");
+const Court = require("./models/court");
 
 // Home Route - List of Centers
 app.get("/", async (req, res) => {
